@@ -5,8 +5,6 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { IoMdClose } from "react-icons/io";
 
-
-
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
     const [isOpenSearch, setIsOpenSearch] = useState(false);
@@ -101,13 +99,13 @@ export default function Navbar() {
                             <IoMdClose className="text-2xl cursor-pointer" onClick={() => setIsSidebarOpen(false)} />
                         </div>
                         <ul>
-                            <li className="py-4 px-6 hover:bg-gray-200 hover:text-red-500 whitespace-nowrap">Home</li>
-                            <li className="py-4 px-6 hover:bg-gray-200 hover:text-red-500 whitespace-nowrap">Shop</li>
-                            <li className="py-4 px-6 hover:bg-gray-200 hover:text-red-500 whitespace-nowrap">Ô Tô</li>
-                            <li className="py-4 px-6 hover:bg-gray-200 hover:text-red-500 whitespace-nowrap">Mô Tô</li>
-                            <li className="py-4 px-6 hover:bg-gray-200 hover:text-red-500 whitespace-nowrap">Blog</li>
-                            <li className="py-4 px-6 hover:bg-gray-200 hover:text-red-500 whitespace-nowrap">Hướng dẫn</li>
-                            <li className="py-4 px-6 hover:bg-gray-200 hover:text-red-500 whitespace-nowrap">Liên hệ</li>
+                            <li className="py-4 px-6 hover:bg-gray-200 hover:text-red-500 whitespace-nowrap cursor-pointer">Home</li>
+                            <li className="py-4 px-6 hover:bg-gray-200 hover:text-red-500 whitespace-nowrap cursor-pointer">Shop</li>
+                            <li className="py-4 px-6 hover:bg-gray-200 hover:text-red-500 whitespace-nowrap cursor-pointer">Ô Tô</li>
+                            <li className="py-4 px-6 hover:bg-gray-200 hover:text-red-500 whitespace-nowrap cursor-pointer">Mô Tô</li>
+                            <li className="py-4 px-6 hover:bg-gray-200 hover:text-red-500 whitespace-nowrap cursor-pointer">Blog</li>
+                            <li className="py-4 px-6 hover:bg-gray-200 hover:text-red-500 whitespace-nowrap cursor-pointer">Hướng dẫn</li>
+                            <li className="py-4 px-6 hover:bg-gray-200 hover:text-red-500 whitespace-nowrap cursor-pointer">Liên hệ</li>
                         </ul>
 
                         <form action="">

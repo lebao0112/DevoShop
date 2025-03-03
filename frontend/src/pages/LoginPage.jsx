@@ -38,13 +38,13 @@ export default function LoginPage() {
                                     <label className="text-sm text-gray-600">Lưu đăng nhập</label>
                                 </div>
                                 <div>
-                                    <span href="#" className="text-sm hover:text-redPrimary mr-2" onClick={() => navigate("/reset-password")}>Quên mật khẩu?</span>
-                                    <span href="#" className="text-sm hover:text-redPrimary " onClick={() => navigate("/signup")}>Đăng ký</span>
+                                    <span href="#" className="text-sm hover:text-redPrimary mr-2 cursor-pointer" onClick={() => navigate("/reset-password")}>Quên mật khẩu?</span>
+                                    <span href="#" className="text-sm hover:text-redPrimary cursor-pointer" onClick={() => navigate("/signup")}>Đăng ký</span>
                                 </div>
                             </div>
                             
                             <div className="mb-4">
-                                <button className="w-full bg-redPrimary text-white py-2 px-3 rounded-md">Đăng nhập</button>
+                                <button className="w-full bg-redPrimary hover:bg-red-500 text-white py-2 px-3 rounded-md">Đăng nhập</button>
                             </div>
                         </form>
                     </div>
