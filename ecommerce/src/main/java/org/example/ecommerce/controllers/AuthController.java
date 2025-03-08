@@ -4,7 +4,10 @@ import org.example.ecommerce.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.*;
+import org.example.ecommerce.models.User;
 
 import java.util.Map;
 
@@ -33,4 +36,26 @@ public class AuthController {
         boolean verified = userService.verifyUser(token);
         return verified ? "Xác minh thành công! Bạn có thể đăng nhập." : "Xác minh thất bại!";
     }
+
+    @PostMapping("/login")
+    public String login(@RequestBody User user){
+
+        return userService.verify(user);
+    }
+
+    @GetMapping("/google-login")
+    public String googleLogin() {
+        return "Vui lòng đăng nhập bằng Google tại: <a href='/oauth2/authorization/google'>Đăng nhập</a>";
+    }
+
+    @GetMapping("/google-success")
+    public Map<String, Object> googleSuccess(OAuth2AuthenticationToken token) {
+        if (token == null) {
+            throw new IllegalArgumentException("Token is null");
+        }
+        OAuth2User user = token.getPrincipal();
+        return user.getAttributes();
+    }
+
+
 }

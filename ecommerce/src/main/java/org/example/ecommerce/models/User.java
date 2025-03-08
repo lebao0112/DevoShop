@@ -49,7 +49,7 @@ public class User {
 
     }
 
-    //Getters
+
     public Long getId() {
         return id;
     }
@@ -116,6 +116,20 @@ public class User {
 
     public void setVerificationToken(String verificationToken) {
         this.verificationToken = verificationToken;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", name='" + name + '\'' +
+                ", password='" + password + '\'' +
+                ", role=" + role +
+                ", createdAt=" + createdAt +
+                ", verified=" + verified +
+                ", verificationToken='" + verificationToken + '\'' +
+                '}';
     }
 }
 

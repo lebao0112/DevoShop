@@ -1,9 +1,13 @@
 package org.example.ecommerce.services;
 
+import io.jsonwebtoken.Jwt;
 import org.example.ecommerce.enums.Role;
 import org.example.ecommerce.models.User;
 import org.example.ecommerce.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -20,12 +24,19 @@ public class UserService {
     @Autowired
     private EmailService emailService;
 
+    @Autowired
+    private AuthenticationManager authManager;
+
+    @Autowired
+    private JwtService jwtService;
+
     private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
 
     public String registerUser(String email, String password, String name) {
         Optional<User> existingUser = userRepository.findByEmail(email);
         if (existingUser.isPresent()) {
-            return "Email đã tồn tại!"; // Trả về thông báo lỗi
+            return "Email đã tồn tại!";
         }
 
         String hashedPassword = passwordEncoder.encode(password);
@@ -73,5 +84,13 @@ public class UserService {
 
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
+    }
+
+    public String verify(User user) {
+        Authentication authentication = authManager.authenticate(new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword()));
+        if(authentication.isAuthenticated())
+            return jwtService.generateToken(user.getEmail());
+
+        return "Fail";
     }
 }
