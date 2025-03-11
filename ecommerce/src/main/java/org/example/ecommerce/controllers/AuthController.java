@@ -31,6 +31,7 @@ public class AuthController {
         return ResponseEntity.status(HttpStatus.CREATED).body(Map.of("message", message));
     }
 
+    // Kích hoạt tài khoản
     @GetMapping("/verify")
     public String verify(@RequestParam String token) {
         boolean verified = userService.verifyUser(token);
@@ -38,15 +39,21 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public String login(@RequestBody User user){
-
-        return userService.verify(user);
+    public ResponseEntity<?> login(@RequestBody User user){
+        String token = userService.verify(user);
+        if(token != null){
+            return ResponseEntity.ok(Map.of("token", token));
+        } else{
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("error", "Sai email hoặc mật khẩu!"));
+        }
     }
 
     @GetMapping("/google-login")
     public String googleLogin() {
         return "Vui lòng đăng nhập bằng Google tại: <a href='/oauth2/authorization/google'>Đăng nhập</a>";
     }
+
+   
 
     @GetMapping("/google-success")
     public Map<String, Object> googleSuccess(OAuth2AuthenticationToken token) {

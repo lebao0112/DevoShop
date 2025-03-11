@@ -18,6 +18,12 @@ public class User {
     @Column(nullable = false, length = 255)
     private String name;
 
+    @Column(length = 10)
+    private String phone;
+
+    @Column(length = 255)
+    private String address;
+
     @Column(nullable = false)
     private String password;
 
@@ -46,9 +52,26 @@ public class User {
         this.role = role;
         this.password = password;
         this.email = email;
+        this.phone = phone;
+        this.address = address;
 
     }
 
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
     public Long getId() {
         return id;

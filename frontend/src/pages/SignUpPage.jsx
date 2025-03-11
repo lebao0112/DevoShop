@@ -45,7 +45,7 @@ export default function SignUpPage() {
                 setTimeout(() => navigate("/login"), 2000);
             }
         } catch (error) {
-            setError("Đăng ký thất bại! Hãy thử lại.");
+            setError("Đăng ký thất bại! Hãy thử lại." + error);
         }
     };
 

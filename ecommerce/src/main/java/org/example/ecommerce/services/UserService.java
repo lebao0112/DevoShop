@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -88,9 +90,17 @@ public class UserService {
 
     public String verify(User user) {
         Authentication authentication = authManager.authenticate(new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword()));
-        if(authentication.isAuthenticated())
-            return jwtService.generateToken(user.getEmail());
+        if (authentication.isAuthenticated()) {
+            // Kiểm tra danh sách roles lấy từ authentication
+            String role = authentication.getAuthorities().stream()
+                    .findFirst()
+                    .map(GrantedAuthority::getAuthority)
+                    .orElse("ROLE_USER"); // Nếu không có role, mặc định là ROLE_USER
 
+            return jwtService.generateToken(user.getEmail(), role);
+        }
         return "Fail";
     }
+
+
 }
