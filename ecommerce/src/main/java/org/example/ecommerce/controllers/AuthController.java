@@ -11,7 +11,6 @@ import org.example.ecommerce.models.User;
 
 import java.util.Map;
 
-@CrossOrigin
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {

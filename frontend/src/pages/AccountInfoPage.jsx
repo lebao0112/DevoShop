@@ -1,11 +1,16 @@
-import { useState } from "react";
+import { useContext } from "react";
+import UserContext from "../userContext";
 
 export default function AccountInfoPage() {
-    const [name, setName] = useState("Nguyen Van A");
-    const [gender, setGender] = useState("");
-    const [phone, setPhone] = useState("********");
-    const [email, setEmail] = useState("le*******@gmail.com");
-    const [birthDate, setBirthDate] = useState({ day: "", month: "", year: "" });
+    const { user, loading } = useContext(UserContext);
+
+    if (loading) {
+        return <div className="flex justify-center items-center min-h-screen">Loading...</div>;
+    }
+
+    if (!user) {
+        return <div className="flex justify-center items-center min-h-screen text-red-500">Bạn chưa đăng nhập!</div>;
+    }
 
     return (
         <div className="flex bg-gray-100 min-h-screen px-6">
@@ -13,7 +18,7 @@ export default function AccountInfoPage() {
             <div className="w-1/4 bg-white p-6 shadow-lg rounded-lg">
                 <div className="flex flex-col items-center text-center">
                     <div className="w-16 h-16 bg-gray-300 rounded-full"></div>
-                    <h2 className="mt-3 font-semibold">{name}</h2>
+                    <h2 className="mt-3 font-semibold">{user.name || "Chưa cập nhật"}</h2>
                 </div>
                 <nav className="mt-6">
                     <ul className="space-y-4">
@@ -36,86 +41,29 @@ export default function AccountInfoPage() {
                         <label className="block font-medium">Họ Tên</label>
                         <input
                             type="text"
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
+                            value={user.name || ""}
                             className="w-64 p-2 border rounded-md"
+                            
                         />
-                    </div>
-
-                    {/* Giới tính */}
-                    <div>
-                        <label className="block font-medium">Giới tính</label>
-                        <div className="flex items-center gap-4">
-                            <label className="flex items-center">
-                                <input type="radio" name="gender" value="Nam" onChange={() => setGender("Nam")} />
-                                <span className="ml-2">Nam</span>
-                            </label>
-                            <label className="flex items-center">
-                                <input type="radio" name="gender" value="Nữ" onChange={() => setGender("Nữ")} />
-                                <span className="ml-2">Nữ</span>
-                            </label>
-                        </div>
                     </div>
 
                     {/* Số điện thoại */}
                     <div>
                         <label className="block font-medium">Số điện thoại</label>
-                        <input type="text" value={phone} className="w-64 p-2 border rounded-md" />
+                        <input type="text" value={user.phone || ""} className="w-64 p-2 border rounded-md"  />
                     </div>
 
                     {/* Email */}
                     <div>
                         <label className="block font-medium">Email</label>
-                        <div className="flex items-center gap-2">
-                            <input type="text" value={email} className="w-64 p-2 border rounded-md" />
-                            <button className="text-blue-500 hover:underline">Thay đổi</button>
-                        </div>
+                        <input type="text" value={user.email || ""} className="w-64 p-2 border rounded-md"  />
                     </div>
 
-                    {/* Ngày sinh */}
+                    {/* Địa chỉ */}
                     <div>
-                        <label className="block font-medium">Ngày sinh</label>
-                        <div className="flex gap-2">
-                            <select
-                                className="p-2 border rounded-md"
-                                onChange={(e) => setBirthDate({ ...birthDate, day: e.target.value })}
-                            >
-                                <option>Ngày</option>
-                                {[...Array(31).keys()].map((d) => (
-                                    <option key={d + 1} value={d + 1}>
-                                        {d + 1}
-                                    </option>
-                                ))}
-                            </select>
-                            <select
-                                className="p-2 border rounded-md"
-                                onChange={(e) => setBirthDate({ ...birthDate, month: e.target.value })}
-                            >
-                                <option>Tháng</option>
-                                {[...Array(12).keys()].map((m) => (
-                                    <option key={m + 1} value={m + 1}>
-                                        {m + 1}
-                                    </option>
-                                ))}
-                            </select>
-                            <select
-                                className="p-2 border rounded-md"
-                                onChange={(e) => setBirthDate({ ...birthDate, year: e.target.value })}
-                            >
-                                <option>Năm</option>
-                                {[...Array(100).keys()].map((y) => (
-                                    <option key={y + 1925} value={y + 1925}>
-                                        {y + 1925}
-                                    </option>
-                                ))}
-                            </select>
-                        </div>
+                        <label className="block font-medium">Địa chỉ</label>
+                        <input type="text" value={user.address || "Chưa cập nhật"} className="w-64 p-2 border rounded-md" readOnly />
                     </div>
-
-                    {/* Nút Lưu */}
-                    <button className="w-64 bg-red-500 text-white p-2 rounded-md hover:bg-red-600">
-                        LƯU THAY ĐỔI
-                    </button>
                 </div>
             </div>
         </div>

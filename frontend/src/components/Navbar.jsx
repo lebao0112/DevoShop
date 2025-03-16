@@ -1,16 +1,18 @@
 import { Link } from "react-router-dom";
 import { FiShoppingCart, FiSearch, FiMenu } from "react-icons/fi";
 import { CgProfile } from "react-icons/cg";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { IoMdClose } from "react-icons/io";
-
+import UserContext from "../userContext";
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
     const [isOpenSearch, setIsOpenSearch] = useState(false);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const navigate = useNavigate();
+    const { user, loading, setUser } = useContext(UserContext);
 
+   
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (!event.target.closest(".profile-dropdown")) {
@@ -23,6 +25,17 @@ export default function Navbar() {
         document.addEventListener("click", handleClickOutside);
         return () => document.removeEventListener("click", handleClickOutside);
     }, []);
+    if (loading) {
+        return <div className="flex justify-center items-center min-h-screen">Loading...</div>;
+    }
+
+
+
+    const handleLogout = () => {
+        localStorage.removeItem("authToken"); // Xóa token
+        setUser(null); // Cập nhật trạng thái user
+        navigate("/login"); // Chuyển hướng về trang đăng nhập
+    };
 
     return (
         <nav className="bg-white shadow-md">
@@ -51,13 +64,13 @@ export default function Navbar() {
                         <li><Link to="/lienhe" className="hover:text-red-500 whitespace-nowrap">LIÊN HỆ</Link></li>
                     </ul>
 
-                    <div className="flex space-x-4 text-xl justify-end ml-auto items-center w-3/12">
+                    <div className="flex space-x-4  text-xl justify-end ml-auto items-center w-3/12">
                         <div className=" items-center">
                             <FiShoppingCart className="cursor-pointer" />
                         </div>
 
                         <div className="hidden lg:flex space-x-4 ">
-                            <div className="relative search-dropdown">
+                            <div className="relative search-dropdown flex items-center">
                                 <FiSearch className="cursor-pointer" onClick={() => setIsOpenSearch(!isOpenSearch)} />
                                 {isOpenSearch && (
                                     <form action="">
@@ -68,17 +81,50 @@ export default function Navbar() {
                                     </form>
                                 )}
                             </div>
-
-                            <div className="relative  profile-dropdown">
-                                <CgProfile
-                                    className="cursor-pointer"
-                                    onClick={() => setIsOpen(!isOpen)}
-                                />
+                            <div className="relative profile-dropdown" onClick={() => setIsOpen(!isOpen)}>
+                                <div className="flex items-center gap-2">
+                                    <CgProfile
+                                        className="cursor-pointer"
+                                        
+                                    />
+                                    <span>{user ? user.name || "Tài khoản" : "Tài khoản"}</span>
+                                    
+                                </div>
+                               
                                 {isOpen && (
                                     <div className="absolute left-1/2 -translate-x-1/2 mt-2 w-40 bg-white shadow-lg rounded-lg">
                                         <ul className="text-gray-700">
-                                            <li className="px-4 py-2 hover:bg-gray-300 cursor-pointer text-sm" onClick={() => navigate("/login")}>Đăng nhập</li>
-                                            <li className="px-4 py-2 hover:bg-gray-300 cursor-pointer text-sm" onClick={() => navigate("/signup")}>Đăng ký</li>
+                                            {user ? (
+                                                <>
+                                                    <li
+                                                        className="px-4 py-2 hover:bg-gray-300 cursor-pointer text-sm"
+                                                        onClick={() => navigate("/account")}
+                                                    >
+                                                        Tài khoản
+                                                    </li>
+                                                    <li
+                                                        className="px-4 py-2 hover:bg-gray-300 cursor-pointer text-sm"
+                                                        onClick={handleLogout}
+                                                    >
+                                                        Đăng xuất
+                                                    </li>
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <li
+                                                        className="px-4 py-2 hover:bg-gray-300 cursor-pointer text-sm"
+                                                        onClick={() => navigate("/login")}
+                                                    >
+                                                        Đăng nhập
+                                                    </li>
+                                                    <li
+                                                        className="px-4 py-2 hover:bg-gray-300 cursor-pointer text-sm"
+                                                        onClick={() => navigate("/signup")}
+                                                    >
+                                                        Đăng ký
+                                                    </li>
+                                                </>
+                                            )}
                                         </ul>
                                     </div>
                                 )}
@@ -94,7 +140,7 @@ export default function Navbar() {
                     <div className="fixed top-0 left-0 w-64 h-full bg-white z-50 shadow-lg lg:hidden tra p-4">
                         <div className="flex justify-between items-center p-4">
                             <span className="text-lg font-medium text-gray-700 truncate overflow-hidden whitespace-nowrap max-w-[200px] cursor-pointer">
-                                Lê Dương Chí Bảo
+                                {user ? user.name || "Tài khoản" : "Tài khoản"}
                             </span>                            
                             <IoMdClose className="text-2xl cursor-pointer" onClick={() => setIsSidebarOpen(false)} />
                         </div>

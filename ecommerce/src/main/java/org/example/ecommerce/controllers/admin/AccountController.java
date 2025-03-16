@@ -10,8 +10,8 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/admin/users")
-public class UserController {
+@RequestMapping("/api/admin/accounts")
+public class AccountController {
 
     @Autowired
     private UserService userService;

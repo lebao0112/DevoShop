@@ -34,7 +34,6 @@ public class UserService {
 
     private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-
     public String registerUser(String email, String password, String name) {
         Optional<User> existingUser = userRepository.findByEmail(email);
         if (existingUser.isPresent()) {
@@ -69,12 +68,17 @@ public class UserService {
         }
         return false;
     }
+
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 
     public Optional<User> getUserById(Long id) {
         return userRepository.findById(id);
+    }
+
+    public Optional<User> getUserByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 
     public User updateUser(Long id, User userDetails) {
@@ -91,16 +95,13 @@ public class UserService {
     public String verify(User user) {
         Authentication authentication = authManager.authenticate(new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword()));
         if (authentication.isAuthenticated()) {
-            // Kiểm tra danh sách roles lấy từ authentication
             String role = authentication.getAuthorities().stream()
                     .findFirst()
                     .map(GrantedAuthority::getAuthority)
-                    .orElse("ROLE_USER"); // Nếu không có role, mặc định là ROLE_USER
+                    .orElse("ROLE_ANONYMOUS"); // default role
 
             return jwtService.generateToken(user.getEmail(), role);
         }
         return "Fail";
     }
-
-
 }
