@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { FiMail, FiLock } from "react-icons/fi";
 import { useState, useContext} from "react";
-import Toast from "../components/Toast";
+import { jwtDecode } from "jwt-decode";
 import UserContext from "../userContext";
 
 import axios from "axios";
@@ -15,7 +15,7 @@ export default function LoginPage() {
         password: "",
     });
 
-    const [toast, setToast] = useState(null);
+    
 
     const handleChange = (e) => {
         setUserState({ ...user, [e.target.name]: e.target.value });
@@ -23,33 +23,40 @@ export default function LoginPage() {
 
     const handleLogin = async (e) => {
         e.preventDefault();
-        setToast(null);
+        
 
         if (user.password === "" || user.email === "") {
-            setToast({ message: "Vui lòng nhập đầy đủ thông tin!", type: "error" });
+           
             return;
         }
 
         try {
             const response = await axios.post("http://localhost:8080/api/auth/login", user);
             if (response.status === 200 && response.data.token) {
-                localStorage.setItem("authToken", response.data.token);
-                setToast({ message: "Đăng nhập thành công!", type: "success" });
+                const token = response.data.token;
+                localStorage.setItem("authToken", token);
+                
+                const decoded = jwtDecode(token);
+                const userRole = decoded.role;
 
-                await fetchUser(); // Gọi API để cập nhật user ngay lập tức
-                navigate("/");
+                await fetchUser(); 
+      
+                if (userRole === "ROLE_ADMIN") {
+                    navigate("/admin/dashboard");
+                } else if (userRole === "ROLE_CUSTOMER") {
+                    navigate("/");
+                }
             } else {
-                setToast({ message: response.data.message || "Đăng nhập thất bại!", type: "error" });
+                alert("Sai tài khoản hoặc mật khẩu!");
             }
         } catch (error) {
-            setToast({ message: "Sai tài khoản hoặc mật khẩu!", type: "error" });
+            alert("Sai tài khoản hoặc mật khẩu!");
             console.log(error);
         }
     };
 
     return (
         <div>
-            {toast && <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />}
             <div className="container justify-center">
                 <div className="flex justify-center">
                     <div className="w-96">

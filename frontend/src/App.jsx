@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import MainLayout from "./layouts/MainLayout";
 import { publicRoutes, privateRoutes } from "./routes";
 import {UserProvider} from "./userContext";
-
+import AdminLayout from "./layouts/AdminLayout";
 
 
 export default function App() {
@@ -17,7 +17,7 @@ export default function App() {
             ))}
           </Route>
           {/* Private Routes */}
-          <Route path="/admin">
+          <Route path="/admin" element={<AdminLayout />}>
             {privateRoutes.map((route, index) => (
               <Route key={index} path={route.path} element={route.element} />
             ))}
