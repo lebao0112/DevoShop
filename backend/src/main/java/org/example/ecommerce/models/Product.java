@@ -25,9 +25,16 @@ public class Product {
     @Column(nullable = false)
     private int stockQuantity;
 
+    @Column(nullable = false, length = 4)
+    private String scale;
+
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
+
+    @ManyToOne
+    @JoinColumn(name = "brand_id", nullable = false)
+    private Brand brand;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -36,8 +43,7 @@ public class Product {
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
 
-
-    public Product(Long id, LocalDateTime createdAt, ProductStatus status, Category category, int stockQuantity, BigDecimal price, String description, String name) {
+    public Product(Long id, LocalDateTime createdAt, ProductStatus status, Category category, int stockQuantity, BigDecimal price, String description, String name, String scale) {
         this.id = id;
         this.createdAt = createdAt;
         this.status = status;
@@ -46,6 +52,7 @@ public class Product {
         this.price = price;
         this.description = description;
         this.name = name;
+        this.scale = scale;
     }
 
     //Getters
@@ -81,6 +88,14 @@ public class Product {
         return createdAt;
     }
 
+    public String getScale() {
+        return scale;
+    }
+
+    public Brand getBrand() {
+        return brand;
+    }
+
     //Setters
     public void setId(Long id) {
         this.id = id;
@@ -114,5 +129,11 @@ public class Product {
         this.createdAt = createdAt;
     }
 
-    // Getters and Setters
+    public void setScale(String scale) {
+        this.scale = scale;
+    }
+
+    public void setBrand(Brand brand) {
+        this.brand = brand;
+    }
 }

@@ -5,7 +5,7 @@ import SignUpPage from "./pages/SignUpPage";
 import AccountInfoPage from "./pages/AccountInfoPage";
 import GeneralPage from "./pages/admin/GeneralPage";
 import ProtectedRoute from "./components/ProtectedRoute";
-
+import ProductManagementPage from "./pages/admin/ProductManagementPage";
 export const publicRoutes = [
   { path: "/", element: <HomePage /> },
   { path: "/login", element: <LoginPage /> },
@@ -25,10 +25,10 @@ export const privateRoutes = [
     ),
   },
   {
-    path: "dashboard",
+    path: "products",
     element: (
       <ProtectedRoute allowedRoles={["ROLE_ADMIN"]}>
-        <h1>Dashboard</h1>
+        <ProductManagementPage />
       </ProtectedRoute>
     ),
   },

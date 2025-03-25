@@ -1,11 +1,10 @@
 import Sidebar from "../../components/Sidebar/Sidebar";
 import Dashboard from "../../components/Dashboard/Dashboard";
-
+import ProductTable from "../../components/Products/ProductTable";
 export default function GeneralPage() {
   return (
-    <main className="grid gap-4 p-4 grid-cols-[250px_1fr]">
-      <Sidebar />
-      <Dashboard />
-    </main>
+    <div>
+        <ProductTable />
+    </div>
   );
 }

@@ -1,13 +1,18 @@
 import { FiCalendar } from "react-icons/fi";
-
+import UserContext from "../../userContext";
+import { useContext } from "react";
 export default function TopBar() {
+    const { user, loading } = useContext(UserContext);
+    if (loading) {
+        return <div className="flex justify-center items-center min-h-screen">Loading...</div>;
+    }
     return (
-        <div className="border-b px-4 mb-4 mt-2 pb-4 border-stone-200">
+        <div className="border-b px-4 mt-2 pb-4 border-stone-200">
             <div className="flex items-center justify-between p-0.5">
                 <div>
-                    <span className="text-sm font-bold block">Good morning, Tom!</span>
-                    <span className="text-xs block text-stone-500">
-                        Tuesday, Aug 8th 2023
+                    <span className="text-sm font-bold block">Xin chào, {user.name}!</span>
+                    <span className="text-xs block text-stone-500"> {/* Ngày tháng năm */}
+                        {new Date().toLocaleDateString()}
                     </span>
                 </div>
 

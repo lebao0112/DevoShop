@@ -8,7 +8,7 @@ import axios from "axios";
 
 export default function LoginPage() {
     const navigate = useNavigate();
-    const { setUser, fetchUser } = useContext(UserContext); // Lấy setUser và fetchUser từ context
+    const { fetchUser } = useContext(UserContext); // Lấy setUser và fetchUser từ context
 
     const [user, setUserState] = useState({
         email: "",
@@ -42,7 +42,7 @@ export default function LoginPage() {
                 await fetchUser(); 
       
                 if (userRole === "ROLE_ADMIN") {
-                    navigate("/admin/dashboard");
+                    navigate("/admin");
                 } else if (userRole === "ROLE_CUSTOMER") {
                     navigate("/");
                 }
