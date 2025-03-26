@@ -1,7 +1,6 @@
 import { createContext, useState, useEffect } from "react";
-import axios from "axios";
 import api from "./config/axiosConfig";
-
+import PropTypes from "prop-types";
 const UserContext = createContext(null);
 
 export const UserProvider = ({ children }) => {
@@ -43,6 +42,10 @@ export const UserProvider = ({ children }) => {
       {children}
     </UserContext.Provider>
   );
+};
+
+UserProvider.propTypes = {
+  children: PropTypes.node.isRequired,
 };
 
 export default UserContext;

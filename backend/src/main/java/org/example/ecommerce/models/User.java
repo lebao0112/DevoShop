@@ -36,6 +36,8 @@ public class User {
 
     @Column(name = "verified", nullable = false)
     private Boolean verified = false;
+    @Column(name = "isactive", nullable = false)
+    private Boolean isactive = false;
 
     @Column(name = "verificationToken")
     private String verificationToken;
@@ -44,7 +46,7 @@ public class User {
 
     }
 
-    public User(Long id, String verificationToken, Boolean verified, LocalDateTime createdAt, Role role, String password, String email) {
+    public User(Long id, String verificationToken, Boolean verified, LocalDateTime createdAt, Role role, String password, String email, String phone, String address, boolean isactive) {
         this.id = id;
         this.verificationToken = verificationToken;
         this.verified = verified;
@@ -54,8 +56,11 @@ public class User {
         this.email = email;
         this.phone = phone;
         this.address = address;
+        this.isactive = isactive;
 
     }
+
+
 
     public String getPhone() {
         return phone;
@@ -101,7 +106,13 @@ public class User {
         return email;
     }
 
+    public Boolean getIsactive() {
+        return isactive;
+    }
 
+    public void setIsactive(Boolean isactive) {
+        this.isactive = isactive;
+    }
     //Setters
 
     public void setId(Long id) {

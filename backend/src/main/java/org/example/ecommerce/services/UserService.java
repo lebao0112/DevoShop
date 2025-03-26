@@ -1,6 +1,7 @@
 package org.example.ecommerce.services;
 
 import io.jsonwebtoken.Jwt;
+import org.example.ecommerce.dto.UserDTO;
 import org.example.ecommerce.enums.Role;
 import org.example.ecommerce.models.User;
 import org.example.ecommerce.repositories.UserRepository;
@@ -12,8 +13,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
+import org.springframework.jdbc.core.JdbcTemplate;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -72,6 +74,7 @@ public class UserService {
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
+
 
     public Optional<User> getUserById(Long id) {
         return userRepository.findById(id);

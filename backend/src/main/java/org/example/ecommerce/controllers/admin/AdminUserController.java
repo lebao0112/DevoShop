@@ -1,5 +1,6 @@
 package org.example.ecommerce.controllers.admin;
 
+import org.example.ecommerce.dto.UserDTO;
 import org.example.ecommerce.models.User;
 import org.example.ecommerce.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,24 +8,27 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/admin/accounts")
-public class AccountController {
+@RequestMapping("/api/admin/users")
+public class AdminUserController {
 
     @Autowired
     private UserService userService;
 
-    @GetMapping
-    public List<User> getAllUsers() {
-        return userService.getAllUsers();
-    }
-
     @GetMapping("/{id}")
     public ResponseEntity<User> getUserById(@PathVariable Long id) {
-        Optional<User> user = userService.getUserById(id);
-        return user.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+        Optional<User> userOptional = userService.getUserById(id);
+        return userOptional.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/get-all-users")
+    public ResponseEntity<List<User>> getAccountList() {
+        List<User> users = userService.getAllUsers();
+        return ResponseEntity.ok(users);
+
     }
 
     @DeleteMapping("/{id}")

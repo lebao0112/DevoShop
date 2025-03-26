@@ -1,4 +1,4 @@
-import ProductTable from "../../components/Products/ProductTable";
+import ProductTable from "../../components/Table/ProductTable";
 
 export default function ProductPage() {
 

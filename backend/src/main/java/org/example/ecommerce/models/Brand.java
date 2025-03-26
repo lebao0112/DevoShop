@@ -1,6 +1,7 @@
 package org.example.ecommerce.models;
 
 import jakarta.persistence.*;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
@@ -9,7 +10,7 @@ import java.util.Date;
 public class Brand {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @Column(unique = true, nullable = false, length = 20)
     private String brandName;
@@ -17,17 +18,19 @@ public class Brand {
     @Column(name = "created_at", nullable = false)
     private Date createAt;
 
-    public Brand(int id, String brandName, Date createAt) {
+    public Brand() {
+    }
+    public Brand(Long id, String brandName, Date createAt) {
         this.id = id;
         this.brandName = brandName;
         this.createAt = createAt;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

@@ -1,6 +1,8 @@
 package org.example.ecommerce.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import org.example.ecommerce.enums.ProductStatus;
 
 import java.math.BigDecimal;
@@ -16,18 +18,26 @@ public class Product {
     @Column(nullable = false, length = 100)
     private String name;
 
+
     @Column(columnDefinition = "TEXT")
     private String description;
 
+    @NotNull(message = "Product price is required")
     @Column(nullable = false, precision = 10, scale = 2)
+    @Min(value = 0, message = "Price must be positive number")
     private BigDecimal price;
 
     @Column(nullable = false)
+    @Min(value = 0, message = "stockQuantity must be positive number")
     private int stockQuantity;
 
     @Column(nullable = false, length = 4)
     private String scale;
 
+    @Column(columnDefinition = "TEXT")
+    private String imageUrl;
+
+    @NotNull(message = "Category cannot be null")
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
@@ -43,7 +53,10 @@ public class Product {
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
 
-    public Product(Long id, LocalDateTime createdAt, ProductStatus status, Category category, int stockQuantity, BigDecimal price, String description, String name, String scale) {
+    public Product() {
+    }
+
+    public Product(Long id, LocalDateTime createdAt, ProductStatus status, Category category, int stockQuantity, BigDecimal price, String description, String name, String scale, String imageUrl, Brand brand) {
         this.id = id;
         this.createdAt = createdAt;
         this.status = status;
@@ -53,6 +66,8 @@ public class Product {
         this.description = description;
         this.name = name;
         this.scale = scale;
+        this.brand = brand;
+        this.imageUrl = imageUrl;
     }
 
     //Getters

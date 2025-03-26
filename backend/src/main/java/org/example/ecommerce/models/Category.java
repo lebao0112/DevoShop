@@ -26,6 +26,8 @@ public class Category {
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
 
+    public Category() {
+    }
     public Category(Long id, LocalDateTime createdAt, String description, String name) {
         this.id = id;
         this.createdAt = createdAt;
