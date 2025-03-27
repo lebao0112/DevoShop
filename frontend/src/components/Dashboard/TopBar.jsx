@@ -1,5 +1,5 @@
 import { FiCalendar } from "react-icons/fi";
-import UserContext from "../../userContext";
+import UserContext from "../../contexts/userContext";
 import { useContext } from "react";
 export default function TopBar() {
     const { user, loading } = useContext(UserContext);

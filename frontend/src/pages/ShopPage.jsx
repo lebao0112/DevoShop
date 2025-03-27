@@ -1,82 +1,97 @@
+import { useEffect, useState } from "react";
 import ProductCard from "../components/ProductCard";
-
-const products = [
-    {
-        id: 1,
-        name: "XE MÔ HÌNH BENTLEY CONTINENTAL GT 1:18 WELLY-FX",
-        price: "1,179,000₫",
-        stock: "Còn 1 sản phẩm",
-        img: "https://pagedone.io/asset/uploads/1688031162.jpg",
-    },
-    {
-        id: 2,
-        name: "XE MÔ HÌNH PORSCHE 911 GT3 CUP 1:18 WELLY (TRẮNG)",
-        price: "1,499,000₫",
-        stock: "Hết hàng",
-        img: "https://product.hstatic.net/1000288177/product/20201124_093724_4ac22f2c9e08459f8e9ec4303287b799_grande.jpg",
-    },
-    {
-        id: 3,
-        name: "XE MÔ HÌNH FERRARI CALIFORNIA T SPIDER 1:18 BBURAGO (ĐỎ)",
-        price: "Liên hệ",
-        stock: "Còn 1 sản phẩm",
-        img: "https://product.hstatic.net/1000288177/product/20201124_093724_4ac22f2c9e08459f8e9ec4303287b799_grande.jpg",
-    },
-    {
-        id: 4,
-        name: "XE MÔ HÌNH AUDI R8 V10 1:18 WELLY (ĐỎ)",
-        price: "950,000₫",
-        stock: "Hết hàng",
-        img: "https://product.hstatic.net/1000288177/product/20201124_093724_4ac22f2c9e08459f8e9ec4303287b799_grande.jpg",
-    },
-    {
-        id: 5,
-        name: "XE MÔ HÌNH AUDI R8 V10 1:18 WELLY (ĐỎ)",
-        price: "950,000₫",
-        stock: "Hết hàng",
-        img: "https://product.hstatic.net/1000288177/product/20201124_093724_4ac22f2c9e08459f8e9ec4303287b799_grande.jpg",
-    }
-];
+import {FiChevronLeft, FiChevronRight} from "react-icons/fi";
+import api from "../config/axiosConfig";
 
 export default function ProductPage() {
+    const [products, setProducts] = useState([]);
+    const [page, setPage] = useState(0); // Trang hiện tại (0-based)
+    const [totalPages, setTotalPages] = useState(0);
+    const [totalProducts, setTotalProducts] = useState(0);
+
+    const fetchProducts = async () => {
+        try{
+            const response = await api.get(`http://localhost:8080/api/customer/shop/all?page=${page}&size=4`);
+            if(response.status !== 200){
+                alert("Lỗi khi tải sản phẩm");
+                return;
+            }
+            setProducts(response.data.content);
+            setTotalPages(response.data.totalPages);
+            setTotalProducts(response.data.totalElements);
+        }catch(error){
+            alert(`Lỗi khi tải sản phẩm: ${error.response.data.message}`);
+        }
+    };
+
+    useEffect(() => {
+        fetchProducts();
+    }, [page]);
+
+    const handlePageChange = (newPage) => {
+        if (newPage >= 0 && newPage < totalPages) {
+            setPage(newPage);
+        }
+    };
+
     return (
-        <div className="container mx-auto p-4">
+        <div className="container mx-auto">
             <div className="flex flex-col md:flex-row gap-4">
                 {/* Sidebar - Bộ lọc */}
-                <div className="w-full md:w-3/12 bg-white p-4 shadow-md border">
+                <div className="w-full md:w-2/12 bg-white p-4 shadow-md border">
                     <h2 className="text-lg font-semibold mb-4">Lọc Sản Phẩm</h2>
-                    <div>
-                        <h3 className="font-medium">Loại Sản Phẩm</h3>
-
-                        <div className="flex items-center mb-4">
-                            <input id="default-checkbox" type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
-                                <label htmlFor="default-checkbox" className="ms-2 text-sm font-medium">Default checkbox</label>
-                        </div>
-                        <div className="flex items-center">
-                            <input id="checked-checkbox" type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
-                                <label htmlFor="checked-checkbox" className="ms-2 text-sm font-medium">Checked state</label>
-                        </div>
-
-                        
-                    </div>
+                    {/* ... lọc sản phẩm ... */}
                 </div>
 
                 {/* Danh sách sản phẩm */}
-                <div className="flex-row md:w-9/12">
-                    <h2>Tất cả sản phẩm</h2>
-                    <div className="w-full  grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 border">
+                <div className="flex flex-col md:w-10/12">
+                    <div className="flex items-center mb-4">
+                        <h2 className="text-lg font-semibold mb-2">Tất cả sản phẩm</h2>
+                        <div className="flex items-center mb-2 mx-2 font-bold">|</div>
+                        <span className="text-sm mb-2">Hiện có {totalProducts} sản phẩm</span>
+                    </div>
+                    
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                         {products.map((product) => (
-                            // eslint-disable-next-line react/jsx-key
                             <ProductCard
-                                image={product.img}
+                                key={product.id}
+                                image={product.imageUrl} // bạn có thể sửa nếu API trả về hình
                                 name={product.name}
-                                price={product.price}
-                                stock={product.stock}
+                                price={product.price.toLocaleString("vi-VN", { style: "currency", currency: "VND" })}
+                                stock={`Còn ${product.stockQuantity} sản phẩm`}
+                                brand={product.brand.brandName}
+                                scale={product.scale}
                             />
                         ))}
                     </div>
+
+                    {/* Phân trang */}
+                    <div className="flex justify-center mt-6 space-x-2">
+                        <button
+                            onClick={() => handlePageChange(page - 1)}
+                            disabled={page === 0}
+                            className="px-3 py-1 border rounded disabled:opacity-50 hover:bg-redPrimary hover:text-white"
+                        >
+                            <FiChevronLeft />
+                        </button>
+                        {Array.from({ length: totalPages }, (_, i) => (
+                            <button
+                                key={i}
+                                onClick={() => handlePageChange(i)}
+                                className={`px-3 py-1 border rounded ${page === i ? "bg-redPrimary text-white" : ""}`}
+                            >
+                                {i + 1}
+                            </button>
+                        ))}
+                        <button
+                            onClick={() => handlePageChange(page + 1)}
+                            disabled={page === totalPages - 1}
+                            className="px-3 py-1 border rounded disabled:opacity-50 hover:bg-redPrimary hover:text-white"
+                        >
+                            <FiChevronRight />
+                        </button>
+                    </div>
                 </div>
-                
             </div>
         </div>
     );

@@ -4,7 +4,7 @@ import { CgProfile } from "react-icons/cg";
 import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { IoMdClose } from "react-icons/io";
-import UserContext from "../userContext";
+import UserContext from "../contexts/userContext";
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
     const [isOpenSearch, setIsOpenSearch] = useState(false);

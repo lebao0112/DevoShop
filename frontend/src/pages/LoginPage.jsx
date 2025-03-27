@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { FiMail, FiLock } from "react-icons/fi";
 import { useState, useContext} from "react";
 import { jwtDecode } from "jwt-decode";
-import UserContext from "../userContext";
+import UserContext from "../contexts/userContext";
 
 import axios from "axios";
 

@@ -1,5 +1,5 @@
 import {FiChevronDown, FiChevronUp} from "react-icons/fi";
-import UserContext from "../../userContext";
+import UserContext from "../../contexts/userContext";
 import { useContext } from "react";
 
 export default function AccountToggle() {

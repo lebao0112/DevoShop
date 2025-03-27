@@ -13,13 +13,13 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/customer/products")
+@RequestMapping("/api/customer/shop")
 public class ShopController {
 
     @Autowired
     private ProductService productService;
 
-    @GetMapping
+    @GetMapping("/all")
     public Page<Product> getPaginatedProducts(
             @RequestParam(defaultValue = "0") int page,  // Default to page 0
             @RequestParam(defaultValue = "20") int size  // Default to 20 products per page

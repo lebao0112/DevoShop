@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect } from "react";
-import api from "./config/axiosConfig";
+import api from "../config/axiosConfig";
 import PropTypes from "prop-types";
 const UserContext = createContext(null);
 

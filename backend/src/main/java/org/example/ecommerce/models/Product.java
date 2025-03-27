@@ -111,6 +111,14 @@ public class Product {
         return brand;
     }
 
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
     //Setters
     public void setId(Long id) {
         this.id = id;

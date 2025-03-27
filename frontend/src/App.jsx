@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import MainLayout from "./layouts/MainLayout";
 import { publicRoutes, privateRoutes } from "./routes";
-import {UserProvider} from "./userContext";
+import {UserProvider} from "./contexts/userContext";
 import AdminLayout from "./layouts/AdminLayout";
 
 
