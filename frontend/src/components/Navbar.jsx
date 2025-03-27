@@ -6,10 +6,10 @@ import { useNavigate } from "react-router-dom";
 import { IoMdClose } from "react-icons/io";
 import UserContext from "../contexts/userContext";
 export default function Navbar() {
+    const navigate = useNavigate();
     const [isOpen, setIsOpen] = useState(false);
     const [isOpenSearch, setIsOpenSearch] = useState(false);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-    const navigate = useNavigate();
     const { user, loading, setUser } = useContext(UserContext);
 
    
@@ -65,7 +65,7 @@ export default function Navbar() {
                     </ul>
 
                     <div className="flex space-x-4  text-xl justify-end ml-auto items-center w-3/12">
-                        <div className=" items-center">
+                        <div className=" items-center" onClick={() => navigate("/cart")}>
                             <FiShoppingCart className="cursor-pointer" />
                         </div>
 

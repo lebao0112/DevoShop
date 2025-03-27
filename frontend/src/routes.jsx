@@ -7,6 +7,7 @@ import GeneralPage from "./pages/admin/GeneralPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import ProductManagementPage from "./pages/admin/ProductManagementPage";
 import AccountManagementPage from "./pages/admin/AccountManagementPage";
+import CartPage from "./pages/CartPage";
 
 export const publicRoutes = [
   { path: "/", element: <HomePage /> },
@@ -14,6 +15,7 @@ export const publicRoutes = [
   { path: "/signup", element: <SignUpPage /> },
   { path: "/shop", element: <ShopPage /> },
   { path: "/account", element: <AccountInfoPage /> },
+  { path: "/cart", element: <CartPage /> },
 ];
 
 
