@@ -47,7 +47,7 @@ export default function Navbar() {
 
                 <div className="lg:w-3/12 md:w-6/12 flex justify-center ">
                     <img
-                        src="src/assets/logo.png"
+                        src="src/assets/logo.jpg"
                         alt="Logo"
                         className="h-10 cursor-pointer "
                         onClick={() => navigate("/")}
@@ -87,12 +87,12 @@ export default function Navbar() {
                                         className="cursor-pointer"
                                         
                                     />
-                                    <span>{user ? user.name || "Tài khoản" : "Tài khoản"}</span>
+                                    <span className="text-sm">{user ? user.name || "Tài khoản" : "Tài khoản"}</span>
                                     
                                 </div>
                                
                                 {isOpen && (
-                                    <div className="absolute left-1/2 -translate-x-1/2 mt-2 w-40 bg-white shadow-lg rounded-lg">
+                                    <div className="border-3 border-redPrimary absolute left-1/2 -translate-x-1/2 mt-2 w-40 bg-white shadow-lg">
                                         <ul className="text-gray-700">
                                             {user ? (
                                                 <>

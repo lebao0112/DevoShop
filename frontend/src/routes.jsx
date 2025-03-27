@@ -8,7 +8,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import ProductManagementPage from "./pages/admin/ProductManagementPage";
 import AccountManagementPage from "./pages/admin/AccountManagementPage";
 import CartPage from "./pages/CartPage";
-
+import LoginGoogleSuccess from "./pages/LoginGoogleSuccess";
 export const publicRoutes = [
   { path: "/", element: <HomePage /> },
   { path: "/login", element: <LoginPage /> },
@@ -16,6 +16,7 @@ export const publicRoutes = [
   { path: "/shop", element: <ShopPage /> },
   { path: "/account", element: <AccountInfoPage /> },
   { path: "/cart", element: <CartPage /> },
+  { path: "/login-google-success", element: <LoginGoogleSuccess /> },
 ];
 
 

@@ -1,6 +1,7 @@
 package org.example.ecommerce.controllers;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.example.ecommerce.services.JwtService;
 import org.example.ecommerce.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,8 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.*;
 import org.example.ecommerce.models.User;
 
+import java.io.IOException;
+import java.net.URI;
 import java.util.Map;
 import java.util.Optional;
 
@@ -53,22 +56,17 @@ public class AuthController {
         }
     }
 
-    @GetMapping("/google-login")
-    public String googleLogin() {
-        return "Vui lòng đăng nhập bằng Google tại: <a href='/oauth2/authorization/google'>Đăng nhập</a>";
+    @GetMapping("/login/google")
+    public ResponseEntity<String> loginGoogleAuth(HttpServletResponse response) throws IOException{
+        response.sendRedirect("http://localhost:8080/oauth2/authorization/google");
+        return ResponseEntity.ok("Redirecting...");
     }
 
-   
-
-    @GetMapping("/google-success")
-    public Map<String, Object> googleSuccess(OAuth2AuthenticationToken token) {
-        if (token == null) {
-            throw new IllegalArgumentException("Token is null");
-        }
-        OAuth2User user = token.getPrincipal();
-        return user.getAttributes();
+    @GetMapping("/loginSuccess")
+    public ResponseEntity<String> handleLoginSuccess(OAuth2AuthenticationToken oAuth2AuthenticationToken) throws IOException{
+        User user = userService.registerUserGoogle(oAuth2AuthenticationToken);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).location(URI.create("http://localhost:5173/")).build();
     }
-
 
     @GetMapping("/profile")
     public ResponseEntity<?> getProfileInfo(HttpServletRequest request){

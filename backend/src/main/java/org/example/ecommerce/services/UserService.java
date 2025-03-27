@@ -2,6 +2,7 @@ package org.example.ecommerce.services;
 
 import io.jsonwebtoken.Jwt;
 import org.example.ecommerce.dto.UserDTO;
+import org.example.ecommerce.enums.AuthProvider;
 import org.example.ecommerce.enums.Role;
 import org.example.ecommerce.models.User;
 import org.example.ecommerce.repositories.UserRepository;
@@ -12,6 +13,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 import org.springframework.jdbc.core.JdbcTemplate;
 import java.util.List;
@@ -51,12 +54,35 @@ public class UserService {
         user.setPassword(hashedPassword);
         user.setRole(Role.CUSTOMER);
         user.setVerificationToken(verificationToken);
-
+        user.setAuthProvider(AuthProvider.LOCAL);
         userRepository.save(user);
 
         String verificationLink = "http://localhost:8080/api/auth/verify?token=" + verificationToken;
         emailService.sendVerificationEmail(email, verificationLink, name);
         return "Vui lòng kiểm tra email để xác minh tài khoản.";
+    }
+
+    public User registerUserGoogle(OAuth2AuthenticationToken auth2AuthenticationToken){
+        OAuth2User oAuth2User = auth2AuthenticationToken.getPrincipal();
+        String email = oAuth2User.getAttribute("email");
+        String name = oAuth2User.getAttribute("name");
+
+        System.out.println("User Email From Google: " + email);
+        System.out.println("User Name From Google: " + name);
+
+        User user = userRepository.findByEmail(email).orElse(null);
+        if(user == null){
+            user = new User();
+            user.setEmail(email);
+            user.setName(name);
+            user.setRole(Role.CUSTOMER);
+            user.setPassword("");
+            user.setVerified(true);
+            user.setIsactive(true);
+            user.setAuthProvider(AuthProvider.GOOGLE);
+            userRepository.save(user);
+        }
+        return user;
     }
 
     public boolean verifyUser(String token) {

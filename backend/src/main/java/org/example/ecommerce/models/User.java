@@ -1,5 +1,6 @@
 package org.example.ecommerce.models;
 
+import org.example.ecommerce.enums.AuthProvider;
 import org.example.ecommerce.enums.Role;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
@@ -42,11 +43,13 @@ public class User {
     @Column(name = "verificationToken")
     private String verificationToken;
 
+    @Enumerated(EnumType.STRING)
+    private AuthProvider authProvider;
     public User(){
 
     }
 
-    public User(Long id, String verificationToken, Boolean verified, LocalDateTime createdAt, Role role, String password, String email, String phone, String address, boolean isactive) {
+    public User(Long id, String verificationToken, Boolean verified, LocalDateTime createdAt, Role role, String password, String email, String phone, String address, boolean isactive, AuthProvider authProvider) {
         this.id = id;
         this.verificationToken = verificationToken;
         this.verified = verified;
@@ -57,7 +60,7 @@ public class User {
         this.phone = phone;
         this.address = address;
         this.isactive = isactive;
-
+        this.authProvider = authProvider;
     }
 
 
@@ -150,6 +153,14 @@ public class User {
 
     public void setVerificationToken(String verificationToken) {
         this.verificationToken = verificationToken;
+    }
+
+    public AuthProvider getAuthProvider() {
+        return authProvider;
+    }
+
+    public void setAuthProvider(AuthProvider authProvider) {
+        this.authProvider = authProvider;
     }
 
     @Override
