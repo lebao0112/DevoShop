@@ -1,5 +1,4 @@
 import { FaMapMarkerAlt, FaEnvelope, FaPhone } from "react-icons/fa";
-
 export default function Header(){
     return (
       <header className="container mx-auto hidden lg:flex items-center justify-between py-4 px-6">

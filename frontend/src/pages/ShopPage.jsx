@@ -55,9 +55,10 @@ export default function ProductPage() {
                         {products.map((product) => (
                             <ProductCard
                                 key={product.id}
+                                id={product.id}
                                 image={product.imageUrl} // bạn có thể sửa nếu API trả về hình
                                 name={product.name}
-                                price={product.price.toLocaleString("vi-VN", { style: "currency", currency: "VND" })}
+                                price={product.price}
                                 stock={`Còn ${product.stockQuantity} sản phẩm`}
                                 brand={product.brand.brandName}
                                 scale={product.scale}

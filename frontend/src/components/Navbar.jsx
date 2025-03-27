@@ -6,10 +6,10 @@ import { useNavigate } from "react-router-dom";
 import { IoMdClose } from "react-icons/io";
 import UserContext from "../contexts/userContext";
 export default function Navbar() {
+    const navigate = useNavigate();
     const [isOpen, setIsOpen] = useState(false);
     const [isOpenSearch, setIsOpenSearch] = useState(false);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-    const navigate = useNavigate();
     const { user, loading, setUser } = useContext(UserContext);
 
    
@@ -47,7 +47,7 @@ export default function Navbar() {
 
                 <div className="lg:w-3/12 md:w-6/12 flex justify-center ">
                     <img
-                        src="src/assets/logo.png"
+                        src="src/assets/logo.jpg"
                         alt="Logo"
                         className="h-10 cursor-pointer "
                         onClick={() => navigate("/")}
@@ -65,7 +65,7 @@ export default function Navbar() {
                     </ul>
 
                     <div className="flex space-x-4  text-xl justify-end ml-auto items-center w-3/12">
-                        <div className=" items-center">
+                        <div className=" items-center" onClick={() => navigate("/cart")}>
                             <FiShoppingCart className="cursor-pointer" />
                         </div>
 
@@ -87,12 +87,12 @@ export default function Navbar() {
                                         className="cursor-pointer"
                                         
                                     />
-                                    <span>{user ? user.name || "Tài khoản" : "Tài khoản"}</span>
+                                    <span className="text-sm">{user ? user.name || "Tài khoản" : "Tài khoản"}</span>
                                     
                                 </div>
                                
                                 {isOpen && (
-                                    <div className="absolute left-1/2 -translate-x-1/2 mt-2 w-40 bg-white shadow-lg rounded-lg">
+                                    <div className="border-3 border-redPrimary absolute left-1/2 -translate-x-1/2 mt-2 w-40 bg-white shadow-lg">
                                         <ul className="text-gray-700">
                                             {user ? (
                                                 <>
