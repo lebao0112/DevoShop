@@ -44,7 +44,9 @@ public class SecurityConfig {
                         .requestMatchers("/api/auth/profile").authenticated()
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         .requestMatchers("/api/customer/shop/**").permitAll()
-                        .requestMatchers("/api/customer/**").hasRole("CUSTOMER")
+                        .requestMatchers("/api/customer/payments/vnpay-payment-return").permitAll()
+                        .requestMatchers("/api/customer/payments/**").authenticated()
+
 
                         .anyRequest().authenticated())
                 .httpBasic(httpBasic -> httpBasic.disable())

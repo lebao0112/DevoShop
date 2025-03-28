@@ -1,5 +1,5 @@
 package org.example.ecommerce.enums;
 
 public enum OrderStatus {
-    PENDING, SHIPPED, DELIVERED, CANCELED
+    PENDING, CONFIRMED ,SHIPPED, DELIVERED, CANCELED
 }

@@ -21,8 +21,13 @@ public class ProductService {
         return productRepository.findAll();
     }
 
-    public Optional<Product> getProductById(Long id) {
-        return productRepository.findById(id);
+    public Product getProductById(Long id) {
+        Optional<Product> product = productRepository.findById(id);
+        if(product.isEmpty()){
+            throw new RuntimeException("Product not found");
+        }
+
+        return product.get();
     }
 
     public Page<Product> getPaginatedProducts(int page, int size){

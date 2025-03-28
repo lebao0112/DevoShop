@@ -11,10 +11,7 @@ import java.time.LocalDateTime;
 
 public class Payment {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-
+    private String id;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -31,7 +28,11 @@ public class Payment {
     @JoinColumn(name = "order_id", nullable = false)
     private Order order;
 
-    public Payment(Long id, LocalDateTime createdAt, PaymentStatus status, Order order, PaymentMethod paymentMethod) {
+    public Payment(){
+
+    }
+
+    public Payment(String id, LocalDateTime createdAt, PaymentStatus status, Order order, PaymentMethod paymentMethod) {
         this.id = id;
         this.createdAt = createdAt;
         this.status = status;
@@ -41,7 +42,7 @@ public class Payment {
 
     // Getters
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
@@ -63,7 +64,7 @@ public class Payment {
 
     //Setters
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

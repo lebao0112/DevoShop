@@ -1,6 +1,7 @@
 package org.example.ecommerce.services;
 
 
+import org.example.ecommerce.enums.OrderStatus;
 import org.example.ecommerce.models.Order;
 import org.example.ecommerce.repositories.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,23 +20,28 @@ public class OrderService {
         return orderRepository.findAll();
     }
 
-    public Optional<Order> getOrderById(Long id) {
-        return orderRepository.findById(id);
-    }
 
-    public Order createOrder(Order order) {
+
+    public Order create(Order order) {
         return orderRepository.save(order);
     }
+    public Order getOrderById(String id) {
+        Optional<Order> orderOptional = orderRepository.findById(id);
+        if(orderOptional.isEmpty()){
+            throw new RuntimeException("Order not found");
+        }
+        return orderOptional.get();
+    }
 
-    public Order updateOrder(Long id, Order orderDetails) {
+    public Order updateOrder(String id, Order orderDetails) {
         return orderRepository.findById(id).map(order -> {
-            order.setStatus(orderDetails.getStatus());
+            order.setStatus(orderDetails.getStatus(OrderStatus.PENDING.toString()));
             order.setTotalPrice(orderDetails.getTotalPrice());
             return orderRepository.save(order);
         }).orElseThrow(() -> new RuntimeException("Order not found"));
     }
 
-    public void deleteOrder(Long id) {
+    public void deleteOrder(String id) {
         orderRepository.deleteById(id);
     }
 }

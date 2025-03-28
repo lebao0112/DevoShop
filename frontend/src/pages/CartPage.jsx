@@ -1,12 +1,41 @@
 import { useCart } from "../contexts/cartContext";
 import { useNavigate } from "react-router-dom";
+import api from "../config/axiosConfig";
 import {FiChevronUp, FiChevronDown} from "react-icons/fi";
+// import { Base64 } from "js-base64";
 
 export default function CartPage() {
     const navigate = useNavigate();
     const { cartItems, removeFromCart, updateQuantity } = useCart();
 
     const totalPrice = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+
+    const handleVNPayCheckout = async () => {
+        if (cartItems.length === 0) {
+            alert("Giỏ hàng trống");
+            return;
+        }
+        console.log(cartItems);
+        // const orderItemsEncoded = Base64.encode(JSON.stringify(cartItems));
+
+        const response = await api.post("/customer/payments/create-payment", {
+            orderAmount: totalPrice,
+            orderItems: cartItems.map(item => ({
+                imageUrl: item.image,
+                productId: item.id,
+                quantity: item.quantity,
+                price: item.price
+            }))
+        });
+        // const data = await response.json();
+        const data = response.data;
+        console.log(data);
+        if (data.vnpayUrl) {
+            window.location.href = data.vnpayUrl; // chuyển hướng tới cổng VNPAY
+        } else {
+            alert("Không tạo được thanh toán");
+        }
+    };
 
     return (
         <div className="container mx-auto p-4">
@@ -76,6 +105,15 @@ export default function CartPage() {
                     </div>
                 </div>
             )}
+
+            <div className="text-right mt-4">
+                <button
+                    className="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-6 rounded shadow"
+                    onClick={handleVNPayCheckout}
+                >
+                    Thanh toán bằng VNPAY
+                </button>
+            </div>
         </div>
     );
 }
