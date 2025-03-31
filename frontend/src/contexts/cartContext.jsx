@@ -24,6 +24,9 @@ export function CartProvider({ children }) {
             quantity: 1,
             imageUrl: product.image,
         });
+
+        console.log(product);
+
         setCartItems((prev) => {
             const exists = prev.find((item) => item.productId === product.id);
             if (exists) {

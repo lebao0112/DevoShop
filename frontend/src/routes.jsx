@@ -9,6 +9,8 @@ import ProductManagementPage from "./pages/admin/ProductManagementPage";
 import AccountManagementPage from "./pages/admin/AccountManagementPage";
 import CartPage from "./pages/CartPage";
 import LoginGoogleSuccess from "./pages/LoginGoogleSuccess";
+import BlogPage from "./pages/BlogPage";
+
 export const publicRoutes = [
   { path: "/", element: <HomePage /> },
   { path: "/login", element: <LoginPage /> },
@@ -17,6 +19,7 @@ export const publicRoutes = [
   { path: "/account", element: <AccountInfoPage /> },
   { path: "/cart", element: <CartPage /> },
   { path: "/login-google-success", element: <LoginGoogleSuccess /> },
+  { path: "/blog", element: <BlogPage /> },
 ];
 
 

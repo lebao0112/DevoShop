@@ -51,7 +51,7 @@ public class SecurityConfig {
 
                         .anyRequest().authenticated())
                 .httpBasic(httpBasic -> httpBasic.disable())
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
                 .oauth2Login(oauth2 -> oauth2
                         .loginPage("/api/auth/login/google")
 //                        .defaultSuccessUrl("/loginSuccess", true)

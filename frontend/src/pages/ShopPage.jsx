@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import ProductCard from "../components/ProductCard";
 import {FiChevronLeft, FiChevronRight} from "react-icons/fi";
 import api from "../config/axiosConfig";
+import ProductFilter from "../components/ProductFilter";
 
 export default function ProductPage() {
     const [products, setProducts] = useState([]);
@@ -38,10 +39,7 @@ export default function ProductPage() {
         <div className="container mx-auto">
             <div className="flex flex-col md:flex-row gap-4">
                 {/* Sidebar - Bộ lọc */}
-                <div className="w-full md:w-2/12 bg-white p-4 shadow-md border">
-                    <h2 className="text-lg font-semibold mb-4">Lọc Sản Phẩm</h2>
-                    {/* ... lọc sản phẩm ... */}
-                </div>
+                <ProductFilter />
 
                 {/* Danh sách sản phẩm */}
                 <div className="flex flex-col md:w-10/12">

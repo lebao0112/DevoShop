@@ -1,17 +1,20 @@
 import { Link } from "react-router-dom";
 import { FiShoppingCart, FiSearch, FiMenu } from "react-icons/fi";
 import { CgProfile } from "react-icons/cg";
+import { GrNotification } from "react-icons/gr";
 import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { IoMdClose } from "react-icons/io";
 import UserContext from "../contexts/userContext";
+import { useCart } from "../contexts/cartContext";
+
 export default function Navbar() {
     const navigate = useNavigate();
     const [isOpen, setIsOpen] = useState(false);
     const [isOpenSearch, setIsOpenSearch] = useState(false);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const { user, loading, setUser } = useContext(UserContext);
-
+    const { cartItems } = useCart();
    
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -65,8 +68,16 @@ export default function Navbar() {
                     </ul>
 
                     <div className="flex space-x-4  text-xl justify-end ml-auto items-center w-3/12">
-                        <div className=" items-center" onClick={() => navigate("/cart")}>
-                            <FiShoppingCart className="cursor-pointer" />
+                        <div className="items-center">
+                            <GrNotification className="cursor-pointer" />
+                        </div>
+                        <div className="relative items-center" onClick={() => navigate("/cart")}>
+                            <FiShoppingCart className="cursor-pointer text-2xl" />
+                            {cartItems.length > 0 && (
+                                <span className="absolute -top-2 -right-2 bg-redPrimary text-white text-xs px-1.5 py-0.5 rounded-full">
+                                    {cartItems.length}
+                                </span>
+                            )}
                         </div>
 
                         <div className="hidden lg:flex space-x-4 ">
@@ -145,13 +156,56 @@ export default function Navbar() {
                             <IoMdClose className="text-2xl cursor-pointer" onClick={() => setIsSidebarOpen(false)} />
                         </div>
                         <ul>
-                            <li className="py-4 px-6 hover:bg-gray-200 hover:text-red-500 whitespace-nowrap cursor-pointer">Home</li>
-                            <li className="py-4 px-6 hover:bg-gray-200 hover:text-red-500 whitespace-nowrap cursor-pointer">Shop</li>
-                            <li className="py-4 px-6 hover:bg-gray-200 hover:text-red-500 whitespace-nowrap cursor-pointer">Ô Tô</li>
-                            <li className="py-4 px-6 hover:bg-gray-200 hover:text-red-500 whitespace-nowrap cursor-pointer">Mô Tô</li>
-                            <li className="py-4 px-6 hover:bg-gray-200 hover:text-red-500 whitespace-nowrap cursor-pointer">Blog</li>
-                            <li className="py-4 px-6 hover:bg-gray-200 hover:text-red-500 whitespace-nowrap cursor-pointer">Hướng dẫn</li>
-                            <li className="py-4 px-6 hover:bg-gray-200 hover:text-red-500 whitespace-nowrap cursor-pointer">Liên hệ</li>
+                            <li className="py-4 px-6 hover:bg-gray-200 hover:text-red-500 whitespace-nowrap cursor-pointer" onClick={() =>{
+                                    setIsSidebarOpen(false);
+                                    navigate("/");
+                                }}>
+                               
+                                Home
+                            </li>
+                            <li className="py-4 px-6 hover:bg-gray-200 hover:text-red-500 whitespace-nowrap cursor-pointer" onClick={() =>{
+                                    setIsSidebarOpen(false);
+                                    navigate("/shop");
+                                }}>
+                               
+                                Shop
+                                
+                            </li>
+                            <li className="py-4 px-6 hover:bg-gray-200 hover:text-red-500 whitespace-nowrap cursor-pointer" onClick={() =>{
+                                    setIsSidebarOpen(false);
+                                    navigate("/oto");
+                                }}>
+                               
+                                Ô Tô
+                            </li>
+                            <li className="py-4 px-6 hover:bg-gray-200 hover:text-red-500 whitespace-nowrap cursor-pointer" onClick={() =>{
+                                    setIsSidebarOpen(false);
+                                    navigate("/moto");
+                                }}>
+                               
+                                Mô Tô
+                            </li>
+                            <li className="py-4 px-6 hover:bg-gray-200 hover:text-red-500 whitespace-nowrap cursor-pointer" onClick={() =>{
+                                    setIsSidebarOpen(false);
+                                    navigate("/blog");
+                                }}>
+                               
+                                Blog
+                            </li>
+                            <li className="py-4 px-6 hover:bg-gray-200 hover:text-red-500 whitespace-nowrap cursor-pointer" onClick={() =>{
+                                    setIsSidebarOpen(false);
+                                    navigate("/huongdan");
+                                }}>
+                               
+                                Hướng dẫn
+                            </li>
+                            <li className="py-4 px-6 hover:bg-gray-200 hover:text-red-500 whitespace-nowrap cursor-pointer" onClick={() =>{
+                                    setIsSidebarOpen(false);
+                                    navigate("/lienhe");
+                                }}>
+                               
+                                Liên hệ
+                            </li>
                         </ul>
 
                         <form action="">

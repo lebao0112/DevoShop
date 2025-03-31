@@ -57,10 +57,10 @@ export default function CartPage() {
                     {cartItems.map((item) => (
                         
                         <div
-                            key={item.id}
+                            key={item.productId}
                             className="flex flex-col md:flex-row justify-between items-center border rounded-lg shadow-sm p-4 bg-white hover:shadow-md transition"
                         >
-                            <img src={item.image} alt={item.name} className="w-24 h-24" />
+                            <img src={item.imageUrl} alt={item.name} className="w-24 h-24" />
                             <div className="flex-1 mb-2 md:mb-0">
                                 <p className="font-semibold text-lg text-gray-800">{item.name}</p>
                                 <p className="text-gray-600 text-sm">Đơn giá: {item.price.toLocaleString()}</p>
@@ -71,13 +71,13 @@ export default function CartPage() {
                                 <span className="text-lg font-medium">{item.quantity}</span>
                                 <div className="flex flex-col gap-1">
                                     <button
-                                        onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                                        onClick={() => updateQuantity(item.productId, item.quantity + 1)}
                                         className="rounded text-gray-700 hover:bg-blue-100"
                                     >
                                         <FiChevronUp />
                                     </button>
                                     <button
-                                        onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                                        onClick={() => updateQuantity(item.productId, item.quantity - 1)}
                                         disabled={item.quantity <= 1}
                                         className="rounded text-gray-700 hover:bg-blue-100 disabled:opacity-50"
                                     >
@@ -92,7 +92,7 @@ export default function CartPage() {
                             </div>
 
                             <button
-                                onClick={() => removeFromCart(item.id)}
+                                onClick={() => removeFromCart(item.productId)}
                                 className="text-red-500 hover:text-red-700 transition ml-2"
                             >
                                 Xoá
