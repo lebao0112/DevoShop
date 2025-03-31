@@ -28,4 +28,8 @@ public class ShopController {
     }
 
 
+    @GetMapping("/get-products-in-stock-better-than")
+    public List<Product> getProductsInStockBetterThan(@RequestParam(defaultValue = "20") int quantity) {
+        return productService.getProductsWithInStockBetterThan(quantity);
+    }
 }

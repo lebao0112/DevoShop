@@ -30,6 +30,10 @@ public class ProductService {
         return product.get();
     }
 
+    public List<Product> getProductsWithInStockBetterThan(int quantity){
+        return productRepository.findProductWithInStockQuantityBetterThan(quantity);
+    }
+
     public Page<Product> getPaginatedProducts(int page, int size){
         Pageable pageable = PageRequest.of(page, size);
         return productRepository.findAll(pageable);

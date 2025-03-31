@@ -28,7 +28,7 @@ public class AdminProductController {
     @PostMapping
     public ResponseEntity<?> createProduct(@Valid @RequestBody Product product, BindingResult result) {
         if(result.hasErrors()){
-            return ResponseEntity.badRequest().body(Map.of("Message: ", result.getAllErrors())) ;
+            return ResponseEntity.badRequest().body(Map.of("message: ", result.getAllErrors())) ;
         }
         return ResponseEntity.ok(productService.createProduct(product));
     }
