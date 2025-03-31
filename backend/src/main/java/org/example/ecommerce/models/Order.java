@@ -10,15 +10,9 @@ import java.util.List;
 
 @Entity
 @Table(name = "orders")
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@ToString
 public class Order {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
@@ -37,7 +31,11 @@ public class Order {
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> orderItems;
 
-    public Order(Long id, List<OrderItem> orderItems, LocalDateTime createdAt, BigDecimal totalPrice, OrderStatus status, User user) {
+    public Order(){
+
+    }
+
+    public Order(String id, List<OrderItem> orderItems, LocalDateTime createdAt, BigDecimal totalPrice, OrderStatus status, User user) {
         this.id = id;
         this.orderItems = orderItems;
         this.createdAt = createdAt;
@@ -46,11 +44,11 @@ public class Order {
         this.user = user;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -60,6 +58,10 @@ public class Order {
 
     public void setOrderItems(List<OrderItem> orderItems) {
         this.orderItems = orderItems;
+    }
+
+    public OrderStatus getStatus() {
+        return status;
     }
 
     public LocalDateTime getCreatedAt() {
@@ -78,7 +80,7 @@ public class Order {
         this.totalPrice = totalPrice;
     }
 
-    public OrderStatus getStatus() {
+    public OrderStatus getStatus(String string) {
         return status;
     }
 
@@ -93,4 +95,5 @@ public class Order {
     public void setUser(User user) {
         this.user = user;
     }
+
 }

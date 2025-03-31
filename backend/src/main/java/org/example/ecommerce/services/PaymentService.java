@@ -22,7 +22,7 @@ public class PaymentService {
         return paymentRepository.findById(id);
     }
 
-    public Optional<Payment> getPaymentByOrderId(Long orderId) {
+    public Optional<Payment> getPaymentByOrderId(String orderId) {
         return paymentRepository.findByOrderId(orderId);
     }
 
