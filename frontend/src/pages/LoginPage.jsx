@@ -6,7 +6,7 @@ import { jwtDecode } from "jwt-decode";
 
 import UserContext from "../contexts/userContext";
 
-import axios from "axios";
+import api from "../config/axiosConfig";
 
 export default function LoginPage() {
     const navigate = useNavigate();
@@ -33,7 +33,7 @@ export default function LoginPage() {
         }
 
         try {
-            const response = await axios.post("http://localhost:8080/api/auth/login", user);
+            const response = await api.post("/auth/login", user);
             if (response.status === 200 && response.data.token) {
                 const token = response.data.token;
                 localStorage.setItem("authToken", token);

@@ -87,7 +87,7 @@ export default function Navbar() {
                                         className="cursor-pointer"
                                         
                                     />
-                                    <span className="text-sm">{user ? user.name || "Tài khoản" : "Tài khoản"}</span>
+                                    <span className="text-sm cursor-pointer hover:text-redPrimary">{user ? user.name || "Tài khoản" : "Tài khoản"}</span>
                                     
                                 </div>
                                

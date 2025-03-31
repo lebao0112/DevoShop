@@ -46,6 +46,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/customer/shop/**").permitAll()
                         .requestMatchers("/api/customer/payments/vnpay-payment-return").permitAll()
                         .requestMatchers("/api/customer/payments/**").authenticated()
+                        .requestMatchers("/api/customer/cart/**").permitAll()
 
 
                         .anyRequest().authenticated())
