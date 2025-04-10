@@ -18,6 +18,11 @@ public class CartController {
 
     @GetMapping
     public List<CartItemDTO> getCart(HttpSession session) {
+        System.out.println(session.getAttribute("cart"));
+        if (session.getAttribute("cart") == null) {
+            session.setAttribute("cart", cartService.getCart(session)); // Create empty cart if no session cart
+        }
+        System.out.println(session.getId());
         return cartService.getCart(session);
     }
 

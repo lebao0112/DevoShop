@@ -1,7 +1,7 @@
 import { FiUser, FiMail, FiLock, FiPhone } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import axios from "axios";
+import api from "../config/axiosConfig";
 
 export default function SignUpPage() {
     const navigate = useNavigate();
@@ -32,7 +32,7 @@ export default function SignUpPage() {
         }
 
         try {
-            const response = await axios.post("http://localhost:8080/api/auth/register", {
+            const response = await api.post("/auth/register", {
                 email: user.email,
                 password: user.password,
                 name: user.name

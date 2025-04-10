@@ -50,7 +50,7 @@ export default function Navbar() {
 
                 <div className="lg:w-3/12 md:w-6/12 flex justify-center ">
                     <img
-                        src="src/assets/logo.jpg"
+                        src="/logo.jpg"
                         alt="Logo"
                         className="h-10 cursor-pointer "
                         onClick={() => navigate("/")}

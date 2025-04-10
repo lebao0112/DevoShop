@@ -10,6 +10,7 @@ import AccountManagementPage from "./pages/admin/AccountManagementPage";
 import CartPage from "./pages/CartPage";
 import LoginGoogleSuccess from "./pages/LoginGoogleSuccess";
 import BlogPage from "./pages/BlogPage";
+import ProductDetailPage from "./pages/ProductDetailPage";
 
 export const publicRoutes = [
   { path: "/", element: <HomePage /> },
@@ -20,6 +21,7 @@ export const publicRoutes = [
   { path: "/cart", element: <CartPage /> },
   { path: "/login-google-success", element: <LoginGoogleSuccess /> },
   { path: "/blog", element: <BlogPage /> },
+  { path: "/products/:id", element: <ProductDetailPage /> },
 ];
 
 

@@ -3,10 +3,9 @@ import { FiMail, FiLock } from "react-icons/fi";
 import { FcGoogle } from "react-icons/fc";
 import { useState, useContext} from "react";
 import { jwtDecode } from "jwt-decode";
-
+import api from "../config/axiosConfig";
 import UserContext from "../contexts/userContext";
 
-import api from "../config/axiosConfig";
 
 export default function LoginPage() {
     const navigate = useNavigate();

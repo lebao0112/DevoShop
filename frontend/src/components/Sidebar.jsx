@@ -14,7 +14,7 @@ export default function Sidebar(){
     ]);
     
     return (
-      <aside className="w-1/4 bg-gray-100 mr-2">
+      <aside className="w-1/4 bg-gray-100 pr-2">
         <h2 className="text-lg font-bold mb-4 bg-redPrimary text-white p-2">DANH MỤC SẢN PHẨM</h2>
         <ul>
           {categories.map((category, index) => (

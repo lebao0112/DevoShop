@@ -12,7 +12,7 @@ export default function ProductPage() {
 
     const fetchProducts = async () => {
         try{
-            const response = await api.get(`http://localhost:8080/api/customer/shop/all?page=${page}&size=4`);
+            const response = await api.get(`/shop/all?page=${page}`);
             if(response.status !== 200){
                 alert("Lỗi khi tải sản phẩm");
                 return;
