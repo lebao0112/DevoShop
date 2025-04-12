@@ -18,18 +18,20 @@ public class AdminUserController {
     @Autowired
     private UserService userService;
 
+    @GetMapping
+    public ResponseEntity<List<User>> getAccountList() {
+        List<User> users = userService.getAllUsers();
+        return ResponseEntity.ok(users);
+
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<User> getUserById(@PathVariable Long id) {
         Optional<User> userOptional = userService.getUserById(id);
         return userOptional.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/get-all-users")
-    public ResponseEntity<List<User>> getAccountList() {
-        List<User> users = userService.getAllUsers();
-        return ResponseEntity.ok(users);
 
-    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {

@@ -17,7 +17,7 @@ export function CartProvider({ children }) {
     }, []);
 
     const addToCart = async (product) => {
-        await api.post("/customer/cart/add", {
+        const response = await api.post("/customer/cart/add", {
             productId: product.id,
             name: product.name,
             price: product.price,
@@ -25,7 +25,10 @@ export function CartProvider({ children }) {
             imageUrl: product.image,
         });
 
-        console.log(product);
+        if(response.status !== 200) {
+            alert("Lỗi khi thêm sản phẩm vào giỏ hàng");
+            return;
+        }
 
         setCartItems((prev) => {
             const exists = prev.find((item) => item.productId === product.id);
@@ -36,6 +39,7 @@ export function CartProvider({ children }) {
                         : item
                 );
             }
+            alert("Thêm sản phẩm vào giỏ hàng thành công!");    
             return [...prev, { ...product, productId: product.id, quantity: 1 }];
         });
     };

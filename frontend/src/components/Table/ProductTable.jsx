@@ -2,13 +2,17 @@ import { useState, useEffect } from "react";
 import { Search } from "lucide-react";
 import api from "../../config/axiosConfig";
 import { FiPlus, FiEdit, FiTrash } from "react-icons/fi";
-import { FaTimes } from "react-icons/fa";
+import AddProductModal from "../Modal/AddProductModal";
+import UpdateProductModal from "../Modal/UpdateProductModal";
+
 export default function ProductTable() {
     const [searchTerm, setSearchTerm] = useState("");
     const [filteredProducts, setFilteredProducts] = useState([]);
     const [products, setProducts] = useState([]);
+    const [productToUpdate, setProductToUpdate] = useState(null); 
     const [loading, setLoading] = useState(true);
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+    const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
     const [newProduct, setNewProduct] = useState({
         name: "",
         price: "",
@@ -52,7 +56,8 @@ export default function ProductTable() {
             if (response.status === 200) {
                 setProducts([...products, response.data]);
                 alert("Thêm sản phẩm thành công");
-                setIsModalOpen(false);
+                fetchProducts();
+                setIsAddModalOpen(false);
             } else {
                 console.log(response.data);
                 alert("Thêm sản phẩm thất bại");
@@ -62,6 +67,25 @@ export default function ProductTable() {
             alert("Thêm sản phẩm thất bại");
         }
     };
+
+    const handleUpdateProduct = async () => {
+        try{
+            const response = await api.put(`/admin/products/${productToUpdate.id}`, productToUpdate);
+            if (response.status === 200) {
+                setProducts(products.map(product => product.id === productToUpdate.id ? response.data : product));
+                alert("Cập nhật sản phẩm thành công");
+                fetchProducts();
+                setIsUpdateModalOpen(false);
+            } else {
+                console.log(response.data);
+                alert("Cập nhật sản phẩm thất bại");
+            }
+        } catch (error) {
+            console.log(error);
+            alert("Cập nhật sản phẩm thất bại");
+        }
+    }
+
 
     useEffect(() => {
         fetchProducts();
@@ -95,7 +119,8 @@ export default function ProductTable() {
             <div className='flex justify-between items-center mb-6'>
                 <div className="flex items-center gap-4">
                     <h2 className='text-xl font-semibold'>Sản phẩm</h2>
-                    <button className='border border-blue-500 rounded-md p-2 text-blue-500 hover:bg-blue-500 hover:text-white transition-all duration-300' onClick={() => setIsModalOpen(true)}>
+                    <button className='border border-blue-500 rounded-md p-2 text-blue-500 hover:bg-blue-500 hover:text-white transition-all duration-300'
+                            onClick={() => setIsAddModalOpen(true)}>
                         <FiPlus size={20} />
                     </button>
                 </div>
@@ -189,7 +214,11 @@ export default function ProductTable() {
                                     </td>
                                     <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-300'>
                                         <button className='text-indigo-400 hover:text-indigo-300 mr-2'>
-                                            <FiEdit size={20} />
+                                            <FiEdit size={20} 
+                                                onClick={() => {
+                                                    setIsUpdateModalOpen(true);
+                                                    setProductToUpdate(product);
+                                                }}/>
                                         </button>
                                         <button className='text-red-400 hover:text-red-300' onClick={() => handleDeleteProduct(product.id)}>
                                             <FiTrash size={20} />
@@ -201,88 +230,21 @@ export default function ProductTable() {
                     </tbody>
                 </table>
             </div>
-            {isModalOpen && (
-                <div className="fixed inset-0 flex">
-                    
-                    <div className="bg-white p-6 rounded-lg w-full relative shadow-lg z-50">
-                        <button onClick={() => setIsModalOpen(false)} className="absolute top-2 right-2 text-red-300 hover:text-red-500">
-                            <FaTimes />
-                        </button>
-                        <h2 className="text-xl font-bold mb-4">Thêm khóa học mới</h2>
-                        <input
-                            type="text"
-                            placeholder="Tên sản phẩm"
-                            className="w-full border p-2 mb-4 rounded"
-                            value={newProduct.name}
-                            onChange={(e) => setNewProduct({ ...newProduct, name: e.target.value })}
-                        />
-                        <input
-                            type="text"
-                            placeholder="Giá bán"
-                            className="w-full border p-2 mb-4 rounded"
-                            value={newProduct.price}
-                            onChange={(e) => setNewProduct({ ...newProduct, price: e.target.value })}
-                        />
-                        <select
-                            className="w-full border p-2 mb-4 rounded"
-                            value={newProduct.brand.id}
-                            onChange={(e) => setNewProduct({ ...newProduct, brand: { id: e.target.value } })}
-                        >
-                            <option value="">Chọn thương hiệu</option>
-                            {/* Lặp qua danh sách thương hiệu */}
-                            <option value="1">Hot Wheels</option>
-                            
-                        </select>
-                        <input
-                            type="text"
-                            placeholder="Tỉ lệ"
-                            className="w-full border p-2 mb-4 rounded"
-                            value={newProduct.scale}
-                            onChange={(e) => setNewProduct({ ...newProduct, scale: e.target.value })}
-                        />
-                        <input
-                            type="text"
-                            placeholder="Số lượng"
-                            className="w-full border p-2 mb-4 rounded"
-                            value={newProduct.stockQuantity}
-                            onChange={(e) => setNewProduct({ ...newProduct, stockQuantity: e.target.value })}
-                        />
-                        <select
-                            className="w-full border p-2 mb-4 rounded"
-                            value={newProduct.category.id}
-                            onChange={(e) => setNewProduct({ ...newProduct, category: { id: e.target.value } })}
-                        >
-                            <option value="">Chọn danh mục</option>
-                            {/* Lặp qua danh sách danh mục */}
-                            <option value="1">Danh mục 1</option>
-                            <option value="2">Danh mục 2</option>
-                        </select>
-                        <input
-                            type="text"
-                            placeholder="Trạng thái"
-                            className="w-full border p-2 mb-4 rounded"
-                            value={newProduct.status}
-                            onChange={(e) => setNewProduct({ ...newProduct, status: e.target.value })}
-                        />
-                        <input
-                            type="text"
-                            placeholder="Mô tả"
-                            className="w-full border p-2 mb-4 rounded"
-                            value={newProduct.description}
-                            onChange={(e) => setNewProduct({ ...newProduct, description: e.target.value })}
-                        />
-                        <div className="flex justify-end gap-4">
-                            <button onClick={() => setIsModalOpen(false)} className="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500">
-                                Hủy
-                            </button>
-                            <button onClick={handleAddProduct} className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-                                Xác nhận
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                
-            )}
+            <AddProductModal
+                isOpen={isAddModalOpen}
+                onClose={() => setIsAddModalOpen(false)}
+                onAddProduct={handleAddProduct}
+                newProduct={newProduct}
+                setNewProduct={setNewProduct}
+            />
+
+            <UpdateProductModal
+                isOpen={isUpdateModalOpen}
+                onClose={() => setIsUpdateModalOpen(false)}
+                onSubmit={handleUpdateProduct}
+                product={productToUpdate} 
+                setProduct={setProductToUpdate} 
+            />
         </div>
     );
 }

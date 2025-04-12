@@ -3,6 +3,7 @@ package org.example.ecommerce.controllers;
 import org.example.ecommerce.dto.ProductDTO;
 import org.example.ecommerce.models.Product;
 import org.example.ecommerce.services.ProductService;
+import org.example.ecommerce.services.ShopService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
@@ -20,21 +21,23 @@ public class ShopController {
     @Autowired
     private ProductService productService;
 
+    @Autowired
+    private ShopService shopService;
 
     @GetMapping("/all")
-    @Cacheable(value = "products", key = "'all_products' + #page + '_' + #size")
+
     public Page<Product> getPaginatedProducts(
 
             @RequestParam(defaultValue = "0") int page,  // Default to page 0
             @RequestParam(defaultValue = "20") int size  // Default to 20 products per page
     ) {
-        return productService.getPaginatedProducts(page, size);
+        return shopService.getPaginatedProducts(page, size);
     }
 
     @GetMapping("/get-product")
-    @Cacheable(value = "products", key = "#id")
+
     public Product getProductById(@RequestParam Long id) {
-        return productService.getProductById(id);
+        return shopService.getProductById(id);
     }
 
 

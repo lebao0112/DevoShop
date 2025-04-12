@@ -43,7 +43,7 @@ export default function LoginPage() {
                 await fetchUser(); 
       
                 if (userRole === "ROLE_ADMIN") {
-                    navigate("/admin");
+                    navigate("/admin", { replace: true });
                 } else if (userRole === "ROLE_CUSTOMER") {
                     navigate("/");
                 }

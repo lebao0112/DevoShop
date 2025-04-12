@@ -21,7 +21,7 @@ export default function ProductCard({id, image, name, price, stock, brand, scale
 
            
             <div className="flex mt-4">
-                <button className="mt-4 flex items-center justify-center text-black gap-2 w-1/2 bg-stone-300 py-2 rounded-l-md hover:bg-stone-400 hover:text-stone-300 text-sm"
+                <button className="mt-4 flex items-center justify-center text-black gap-2 w-1/2 bg-stone-300 py-2 rounded-l-md hover:bg-stone-400 hover:text-white text-sm"
                     onClick={() => navigate(`/products/${id}`)}
                 >
                     Chi tiết

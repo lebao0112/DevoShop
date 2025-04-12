@@ -23,7 +23,7 @@ export default function AccountTable() {
     const fetchAccounts = async () => {
         try {
             setLoading(true);
-            const response = await api.get("/admin/users/get-all-users");
+            const response = await api.get("/admin/users");
             if (response.status === 200) {
                 setAccounts(response.data); 
                 setFilteredUsers(response.data);  
