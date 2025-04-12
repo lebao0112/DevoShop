@@ -7,6 +7,7 @@ import io.github.cdimascio.dotenv.Dotenv;
 import java.util.HashMap;
 import java.util.Map;
 
+// This configuration class sets up the Cloudinary service for image uploads.
 @Configuration
 public class CloudinaryConfig {
     Dotenv dotenv = Dotenv.load();
