@@ -22,6 +22,7 @@ export default function ProductTable() {
         stockQuantity: "",
         description: "",
         scale: "",
+        image_file: "",
     });
     const handleSearch = (e) => {
         const term = e.target.value.toLowerCase();
@@ -52,11 +53,28 @@ export default function ProductTable() {
 
     const handleAddProduct = async () => {
         try {
-            const response = await api.post("/admin/products", newProduct);
+            const formData = new FormData();
+            formData.append("image", newProduct.image_file);
+            formData.append("name", newProduct.name);
+            formData.append("description", newProduct.description);
+            formData.append("price", newProduct.price);
+            formData.append("stockQuantity", newProduct.stockQuantity);
+            formData.append("brand", newProduct.brand.id);
+            formData.append("scale", newProduct.scale);
+            formData.append("category", newProduct.category.id);
+            formData.append("status", newProduct.status);
+
+            const response = await api.post("/admin/products", formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            });
+
             if (response.status === 200) {
                 setProducts([...products, response.data]);
                 alert("Thêm sản phẩm thành công");
                 fetchProducts();
+                console.log(response.data);
                 setIsAddModalOpen(false);
             } else {
                 console.log(response.data);

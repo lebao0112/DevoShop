@@ -32,24 +32,37 @@ export default function AddProductModal({ isOpen, onClose, onAddProduct, newProd
                         Tên sản phẩm
                     </label>
                 </div>
-
-                <div className="relative w-full mb-4">
-                    <input
-                        type="text"
-                        id="price"
-                        placeholder=" "
-                        className="peer w-full border border-gray-300 rounded-md pt-6 pb-2 px-3 text-sm placeholder-transparent focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                        onChange={(e) => setNewProduct({ ...newProduct, price: e.target.value })}
-                    />
-                    <label
-                        htmlFor="price"
-                        className="absolute left-3 top-1.5 text-sm text-gray-500 transition-all bg-white px-1
+                <div className="flex gap-2">
+                    <div className="relative w-full mb-4">
+                        <input
+                            type="number"
+                            id="price"
+                            placeholder=" "
+                            className="peer w-full border border-gray-300 rounded-md pt-6 pb-2 px-3 text-sm placeholder-transparent focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                            onChange={(e) => setNewProduct({ ...newProduct, price: e.target.value })}
+                        />
+                        <label
+                            htmlFor="price"
+                            className="absolute left-3 top-1.5 text-sm text-gray-500 transition-all bg-white px-1
                         peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400
                         peer-focus:top-1.5 peer-focus:text-sm peer-focus:text-blue-500"
-                    >
-                        Giá bán
-                    </label>
+                        >
+                            Giá bán
+                        </label>
+                    </div>
+                    <div className="relative w-full mb-4">
+                        <label className="text-sm block">Ảnh sản phẩm</label>
+                        <input
+                            type="file"
+                            accept="image/*"
+                            onChange={(e) =>
+                                setNewProduct({ ...newProduct, image_file: e.target.files[0] })
+                            }
+                            className="block w-full text-sm border border-gray-300 rounded p-2"
+                        />
+                    </div>
                 </div>
+               
 
                 <label className="text-sm mb-1 block">Thương hiệu</label>
                 <select
@@ -110,7 +123,9 @@ export default function AddProductModal({ isOpen, onClose, onAddProduct, newProd
                 <label className="text-sm mb-1 block">Trạng thái</label>
 
                 <select className="w-full border px-3 py-2 mb-4 rounded text-sm"
+                   
                     onChange={(e) => setNewProduct({ ...newProduct, status: e.target.value })}>
+                    <option value="">Chọn trạng thái</option>
                     <option value="AVAILABLE">AVAILABLE</option>
                     <option value="DISCONTINUED">DISCONTINUED</option>
                     <option value="OUT_OF_STOCK">OUT_OF_STOCK</option>

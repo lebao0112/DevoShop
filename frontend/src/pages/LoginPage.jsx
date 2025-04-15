@@ -32,7 +32,7 @@ export default function LoginPage() {
         }
 
         try {
-            const response = await api.post("/auth/login", user);
+            const response = await api.post("/auth/login", user , { withJWT: false });
             if (response.status === 200 && response.data.token) {
                 const token = response.data.token;
                 localStorage.setItem("authToken", token);
@@ -106,6 +106,13 @@ export default function LoginPage() {
                                     <FcGoogle />
                                     Đăng nhập bằng Google
                                 </button>
+                            </div>
+                            <div className="text-center text-sm mt-4">
+                                <span>Bạn chưa có tài khoản? </span>
+                                <a href="/signup" className="text-redPrimary hover:text-red-500">Đăng ký</a>
+                            </div>
+                            <div className="text-center text-sm mt-4">
+                                <a href="/forgot-password" className="text-redPrimary hover:text-red-500">Quên mật khẩu?</a>
                             </div>
                         </form>
                        

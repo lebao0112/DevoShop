@@ -46,7 +46,7 @@ const products = [
 
 export default function ProductCarousel() {
     return (
-        <div className="container">
+        <div className="container-fluid">
             <div className="flex justify-between items-center my-4">
                 <h2 className="font-bold text-lg">DEAL GIÁ SỐC</h2>
                 <div className="flex">

@@ -22,7 +22,7 @@ export function CartProvider({ children }) {
             name: product.name,
             price: product.price,
             quantity: 1,
-            imageUrl: product.image,
+            imageUrl: product.imageUrl,
         });
 
         if(response.status !== 200) {

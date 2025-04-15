@@ -36,10 +36,10 @@ export default function SignUpPage() {
                 email: user.email,
                 password: user.password,
                 name: user.name
-            });
+            }, { withJWT: false });
 
             if (response.status !== 201) {
-                setError(response.data.error); 
+                setError(response.data.error);
             } else {
                 setSuccess(response.data.message);
                 setTimeout(() => navigate("/login"), 2000);

@@ -35,7 +35,6 @@ public class ShopController {
     }
 
     @GetMapping("/get-product")
-
     public Product getProductById(@RequestParam Long id) {
         return shopService.getProductById(id);
     }

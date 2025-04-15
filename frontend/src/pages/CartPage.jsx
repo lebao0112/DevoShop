@@ -21,8 +21,8 @@ export default function CartPage() {
         const response = await api.post("/customer/payments/create-payment", {
             orderAmount: totalPrice,
             orderItems: cartItems.map(item => ({
-                imageUrl: item.image,
-                productId: item.id,
+                productId: item.productId,
+                imageUrl: item.imageUrl,
                 quantity: item.quantity,
                 price: item.price
             }))

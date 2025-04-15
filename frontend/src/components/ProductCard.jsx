@@ -3,15 +3,15 @@ import PropTypes from "prop-types";
 import { useCart } from "../contexts/cartContext";
 import { useNavigate } from "react-router-dom";
 
-export default function ProductCard({id, image, name, price, stock, brand, scale }) {
+export default function ProductCard({ id, imageUrl, name, price, stock, brand, scale }) {
     const { addToCart } = useCart();
     const navigate = useNavigate();
     return (
         <div className=" overflow-hidden w-full relative shadow-none transition-shadow duration-300 cursor-pointer border-1 border-gray-300 hover:border-redPrimary p-4">
             <img
-                src={image}
+                src={imageUrl}
                 alt={name}
-                className="object-cover relative z-0 rounded-lg"
+                className="w-full h-60 object-contain relative z-0 rounded-lg"
             />
             <h3 className="mt-4 text-sm font-semibold">{name}</h3>
             <p className="mt-2 text-xs text-gray-500">{stock}</p>
@@ -27,7 +27,7 @@ export default function ProductCard({id, image, name, price, stock, brand, scale
                     Chi tiết
                 </button>
                 <button className="mt-4 flex items-center justify-center text-white gap-2 w-full bg-redPrimary py-2 rounded-r-md hover:bg-red-700"
-                    onClick={() => addToCart({ id: id, name: name, price: price, image: image })}
+                    onClick={() => addToCart({ id: id, name: name, price: price, imageUrl: imageUrl })}
                 >
                     <FaShoppingCart /> Thêm vào giỏ
                 </button>
@@ -39,7 +39,7 @@ export default function ProductCard({id, image, name, price, stock, brand, scale
 
 ProductCard.propTypes = {
     id: PropTypes.number.isRequired,
-    image: PropTypes.string.isRequired,
+    imageUrl: PropTypes.string.isRequired,
     brand: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     rating: PropTypes.number.isRequired,

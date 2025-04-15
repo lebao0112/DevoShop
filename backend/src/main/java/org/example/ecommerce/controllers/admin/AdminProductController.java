@@ -38,6 +38,15 @@ public class AdminProductController {
         return ResponseEntity.ok(productService.getAllProducts());
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getProductById(@PathVariable Long id) {
+       Product product = productService.getProductById(id);
+        if (product == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(product);
+    }
+
     @PostMapping
     public ResponseEntity<?> createProduct( @RequestParam("image") MultipartFile image,
                                             @RequestParam("name") String name,
@@ -67,6 +76,8 @@ public class AdminProductController {
             product.setStatus(status);
 
             Product savedProduct = productService.createProduct(image, product);
+            cacheManager.getCache("products").evict("getAllProducts");
+
             return ResponseEntity.ok(savedProduct);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));

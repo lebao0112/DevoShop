@@ -1,6 +1,6 @@
 export default function Footer() {
     return (
-        <footer className="w-full bg-gray-300 text-black text-sm py-6">
+        <footer className="w-full h-auto bg-black text-white text-sm py-6">
             <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-4 px-6">
                 {/* Cột 1: Thông tin công ty */}
                 <div>
@@ -23,9 +23,9 @@ export default function Footer() {
                 {/* Cột 3: Chăm sóc khách hàng */}
                 <div>
                     <h3 className="font-bold">CHĂM SÓC KHÁCH HÀNG</h3>
-                    <p className="text-red-500 font-bold">HOTLINE: 09.69.458.488 - 09.2222.89.45</p>
+                    <p className="text-red-500 font-bold">HOTLINE: 8888 8888 8888 8888</p>
                     <p>Thứ 2 - CN: từ 9:00 - 21:00</p>
-                    <img src="/bo-cong-thuong.png" alt="Đã Thông Báo Bộ Công Thương" className="mt-2 w-32" />
+                 
                 </div>
             </div>
         </footer>
